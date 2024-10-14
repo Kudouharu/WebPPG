@@ -1,0 +1,15 @@
+input::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.wave-container {
+    position: relative;
+    height: 100px; /* Atur tinggi sesuai kebutuhan */
+    overflow: hidden; /* Menghindari overflow */
+}
+
+.wave-container svg {
+    width: 100%; /* Agar SVG memenuhi lebar container */
+    height: auto; /* Menjaga rasio aspek */
+}
