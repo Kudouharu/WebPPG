@@ -45,6 +45,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kelompok', [KelompokController::class, 'store']);
     Route::post('/kelompok/edit/{id}', [KelompokController::class, 'update']);
     Route::delete('/kelompok/delete/{id}', [KelompokController::class, 'destroy']);
+
+    // Menu User
+    Route::get('/user', [userController::class, 'index']);
+    Route::post('/user', [userController::class, 'store']);
+    Route::post('/user/edit/{id}', [userController::class, 'update']);
+    Route::delete('/user/delete/{id}', [userController::class, 'destroy']);
 });
 
 Route::get('/login', [AuthenticationController::class, 'login'])->name('login')->middleware('guest');
