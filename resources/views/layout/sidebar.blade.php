@@ -50,12 +50,12 @@
                 </a>
               </li>
               <li>
-                <a href="components/buttons.html">
+                <a href="{{url('/jamaah')}}">
                   <span class="sub-item">Data Jamaah</span>
                 </a>
               </li>
               <li>
-                <a href="components/gridsystem.html">
+                <a href="{{url('/siswa')}}">
                   <span class="sub-item">Data Siswa</span>
                 </a>
               </li>
@@ -85,8 +85,24 @@
                   <span class="sub-item">Data Kelompok</span>
                 </a>
               </li>
+              <li>
+                <a href="{{url('kls')}}">
+                  <span class="sub-item">Data Kelas</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{url('pekerjaan')}}">
+                  <span class="sub-item">Data Pekerjaan</span>
+                </a>
+              </li>
             </ul>
           </div>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/user') }}">
+            <i class="fas fa-user"></i>
+            <p>User</p>
+          </a>
         </li>
       </ul>
     </div>

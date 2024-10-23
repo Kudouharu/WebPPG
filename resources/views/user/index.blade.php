@@ -16,6 +16,15 @@
                     </button>
                 </div>
             </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="card-body">
                 <!-- Modal -->
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -34,24 +43,54 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="nama">Nama User</label>
-                                                <input type="text" class="form-control" id="nama" name="nama"
+                                                <input type="text" class="form-control" name="nama"
                                                     placeholder="* isi Nama User" />
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="alamat">Alamat User</label>
-                                                <input type="text" class="form-control" id="alamat" name="alamat"
-                                                    placeholder="* isi Alamat Masjid User" />
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    placeholder="* isi Email User" />
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" placeholder="* isi Password User" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="jabatan">Jabatan</label>
+                                                <select name="jabatan" id="jabatan" onchange="showJabatan()"
+                                                    class="form-control select2">
+                                                    <option value="" selected disabled>Pilih Jabatan</option>
+                                                    <option value="daerah">Daerah</option>
+                                                    <option value="desa">Desa</option>
+                                                    <option value="kelompok">Kelompok</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12" id="desaSelect" hidden>
+                                            <div class="form-group">
                                                 <label for="desa">Desa</label>
-                                                <select name="desa" id="desa" class="form-control">
+                                                <select name="desa" class="form-control">
                                                     <option value="" selected disabled>Pilih Desa</option>
                                                     @foreach ($desas as $desa)
                                                     <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12" id="kelompokSelect" hidden>
+                                            <div class="form-group">
+                                                <label for="kelompok">Kelompok</label>
+                                                <select name="kelompok" class="form-control select2">
+                                                    <option value="" selected disabled>Pilih Kelompok</option>
+                                                    @foreach ($kelompoks as $kelompok)
+                                                    <option value="{{ $kelompok->id }}">{{ $kelompok->nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -78,18 +117,18 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama User</th>
-                                <th>Alamat</th>
-                                <th>Desa</th>
+                                <th>Email</th>
+                                <th>Jabatan</th>
                                 <th style="width: 10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($user as $data)
+                            @foreach ($users as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->nama }}</td>
-                                <td>{{ $data->alamat }}</td>
-                                <td>{{ $data->nama_desa }}</td>
+                                <td>{{ $data->email }}</td>
+                                <td>{{ $data->jabatan }}</td>
                                 <td>
                                     <div class="form-button-action">
                                         <!-- Button trigger modal -->
@@ -110,9 +149,9 @@
                                                         </h5>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="{{ url('/user/edit/'. $data->id) }}"
-                                                            method="POST" id="editRowForm{{ $data->id }}"
-                                                            class="row g-3" enctype="multipart/form-data">
+                                                        <form action="{{ url('/user/edit/'. $data->id) }}" method="POST"
+                                                            id="editRowForm{{ $data->id }}" class="row g-3"
+                                                            enctype="multipart/form-data">
                                                             @csrf
                                                             <div class="row">
                                                                 <div class="col-sm-12">
@@ -120,35 +159,20 @@
                                                                         <label for="nama">Nama User</label>
                                                                         <input type="text"
                                                                             class="form-control form-control" id="nama"
-                                                                            name="nama"
-                                                                            placeholder="* isi Nama User"
+                                                                            name="nama" placeholder="* isi Nama User"
                                                                             value="{{ $data->nama }}" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="form-group">
-                                                                        <label for="alamat">Alamat User</label>
-                                                                        <input type="text"
-                                                                            class="form-control form-control"
-                                                                            id="alamat" name="alamat"
-                                                                            placeholder="* isi Alamat Masjid User"
-                                                                            value="{{ $data->alamat }}" />
+                                                                        <label for="email">Email</label>
+                                                                        <input type="email" class="form-control"
+                                                                            name="email" placeholder="* isi Email User"
+                                                                            value="{{ $data->email }}" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <div class="form-group">
-                                                                        <label for="desa">Desa</label>
-                                                                        <select name="desa" id="desa"
-                                                                            class="form-control">
-                                                                            <option value="" disabled>Pilih Desa
-                                                                            </option>
-                                                                            @foreach ($desas as $desa)
-                                                                            <option value="{{ $desa->id }}" {{ $data->
-                                                                                id_desa == $desa->id ? 'selected' : ''
-                                                                                }}>{{ $desa->nama }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
+                                                                    <input type="hidden" name="jabatan" value="{{ $data->jabatan }}">    
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -182,4 +206,30 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
+<script>
+    // fungsi untuk edit berdasarkan id
+    function editRow(id) {
+        $("#editRowForm" + id).submit(); // Pastikan form ada
+    }
+
+    // fungsi untuk close modal
+    function closemodal() {
+        $(".modal").modal("hide");
+    }
+
+    // fungsi untuk menampilkan pilihan desa
+    function showJabatan() {
+        var jabatan = $('#jabatan').val();
+        $("#desaSelect").attr("hidden", true);
+        $("#kelompokSelect").attr("hidden", true);
+        
+        if (jabatan === "desa") {
+            $("#desaSelect").removeAttr("hidden");
+        } else if (jabatan === "kelompok") {
+            $("#desaSelect").removeAttr("hidden");
+            $("#kelompokSelect").removeAttr("hidden");
+        }
+    }
+</script>
 @endsection

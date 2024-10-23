@@ -26,6 +26,10 @@
         },
       });
   </script>
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <!-- CSS Files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -102,11 +106,14 @@
   <!-- Kaiadmin DEMO methods, don't include it in your project! -->
   <script src="assets/js/setting-demo.js"></script>
   <script src="assets/js/demo.js"></script>
-
-  {{-- js custom --}}
-  <script></script>
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
   <script>
     $(document).ready(function () {
+
+      $("#datepicker").flatpickr();
+      $("#datepicker1").flatpickr();
+
       $("#basic-datatables").DataTable({});
 
       $("#multi-filter-select").DataTable({
@@ -192,6 +199,10 @@
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
       });
+
+      function closeEdit(id) {
+        $(`#editModal${id}`).modal("hide");
+      }
   </script>
 </body>
 

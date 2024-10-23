@@ -1,8 +1,2 @@
-function closemodal() {
-    var modal = document.getElementById("modal");
-    modal.style.display = "none";
-}
+// Import di file JavaScript Anda
 
-function submitForm() {
-    $("#addRowForm").submit(); // Mengirim form
-}

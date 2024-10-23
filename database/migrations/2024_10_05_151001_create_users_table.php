@@ -20,14 +20,12 @@ return new class extends Migration
             $table->string('password');
             $table->bigInteger('id_daerah')->unsigned();
             $table->foreign('id_daerah')->references('id')->on('daerah');
-            $table->bigInteger('id_desa')->unsigned();
+            $table->bigInteger('id_desa')->unsigned()->nullable();
             $table->foreign('id_desa')->references('id')->on('desa');
-            $table->bigInteger('id_kelompok')->unsigned();
+            $table->bigInteger('id_kelompok')->unsigned()->nullable();
             $table->foreign('id_kelompok')->references('id')->on('kelompok');
-            $table->enum('jabatan', ["daerah","desa","kelompok"])->default('kelompok');
+            $table->enum('jabatan', ["daerah", "desa", "kelompok"])->default('kelompok');
             $table->string('foto');
-            $table->string('api_token')->nullable();
-            $table->timestamp('token_expires_at')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });
